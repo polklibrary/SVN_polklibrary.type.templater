@@ -28,6 +28,7 @@ src/polklibrary/type/templater/testing.py
 src/polklibrary/type/templater/browser/__init__.py
 src/polklibrary/type/templater/browser/__init__.pyc
 src/polklibrary/type/templater/browser/configure.zcml
+src/polklibrary/type/templater/browser/edit_templater.pt
 src/polklibrary/type/templater/browser/templater.pt
 src/polklibrary/type/templater/browser/templater.py
 src/polklibrary/type/templater/browser/templater.pyc

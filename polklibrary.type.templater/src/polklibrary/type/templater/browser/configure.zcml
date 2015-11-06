@@ -31,4 +31,11 @@
         permission="zope2.View"
         />
       
+    <browser:page
+        for="polklibrary.type.templater.models.templater.ITemplater"
+        name="html_preview"
+        class=".templater.PreviewTemplater"
+        permission="zope2.View"
+        />
+      
 </configure>

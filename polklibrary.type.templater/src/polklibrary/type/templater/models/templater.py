@@ -3,6 +3,10 @@ from plone import api
 from plone.app.textfield import RichText
 from plone.supermodel import model
 from zope import schema
+from zope.interface import directlyProvides
+from zope.schema.interfaces import IContextSourceBinder
+from zope.schema.vocabulary import SimpleVocabulary
+
 
 class ITemplater(model.Schema):
 
@@ -49,6 +53,13 @@ class ITemplater(model.Schema):
     exclude_from_nav = schema.Bool(
             title=u"Exclude from nav",
             default=False,
+            required=False,
+        )
+        
+    set_context = schema.TextLine(
+            title=u"Set Context Path",
+            description=u"If provided, this page will load in the object context of the provided path: e.x. /yoursite/folder/my-document",
+            default=u"",
             required=False,
         )
         
