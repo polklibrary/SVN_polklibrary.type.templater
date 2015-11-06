@@ -34,8 +34,12 @@
                 editor_css.getSession().setValue(css_textarea.val());
                 editor_css.getSession().on('change', function(){
                     css_textarea.val(editor_css.getSession().getValue());
-                    if (iframe != null)
-                        $(iframe).find('body').append(editor_css.getSession().getValue());
+                    if (iframe != null) {
+                        $(iframe).find('head').find('style.ht-marker').remove();
+                        var style = editor_css.getSession().getValue();
+                        style = style.replace('<style','<style class="ht-marker"');
+                        $(iframe).find('head').append(style);
+                    }
                 });
 
                 

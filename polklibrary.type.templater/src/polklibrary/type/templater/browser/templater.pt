@@ -12,7 +12,7 @@
 	</metal:block>
     
 	<metal:block fill-slot="style_slot">
-            <tal:block content="structure context/css" />
+            <tal:block content="structure view/get_style" />
 	</metal:block>
     
     <metal:content-title fill-slot="content-title" >

@@ -10,6 +10,9 @@ class Templater(BrowserView):
     def __call__(self):
         return self.template()
 
+    def get_style(self):
+        return self.context.css.replace('<style','<style class="ht-marker"')
+        
     def get_html(self):
         return self._transformed_html(self.context.html, self.context.set_context)
     
@@ -56,6 +59,8 @@ class PreviewTemplater(Templater):
     
         return self.template()
 
+    def get_style(self):
+        return self.css.replace('<style','<style class="ht-marker"')
         
     def get_html(self):
         return self._transformed_html(self.html, self.set_context)

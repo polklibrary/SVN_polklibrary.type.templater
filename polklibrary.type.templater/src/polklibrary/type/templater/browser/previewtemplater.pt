@@ -23,7 +23,7 @@
 	</metal:block>
     
 	<metal:block fill-slot="style_slot">
-        <tal:block content="structure view/css" />
+        <tal:block content="structure view/get_style" />
         <style>
             #preview-templater {
                 background-image: url("++resource++polklibrary.type.templater/preview.png");
