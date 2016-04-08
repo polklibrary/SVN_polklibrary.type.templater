@@ -6,13 +6,12 @@
 	  lang="en">
 <body>
 
-
 	<metal:block fill-slot="javascript_head_slot">
         <tal:block content="structure context/js" />
 	</metal:block>
     
 	<metal:block fill-slot="style_slot">
-            <tal:block content="structure view/get_style" />
+        <tal:block content="structure view/get_style" />
 	</metal:block>
     
     <metal:content-title fill-slot="content-title" >

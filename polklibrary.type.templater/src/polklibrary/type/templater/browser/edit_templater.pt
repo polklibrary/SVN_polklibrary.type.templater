@@ -10,10 +10,11 @@
 	<metal:block fill-slot="javascript_head_slot">
         <script type="text/javascript" src="${context/absolute_url}/++plone++static/components/ace-builds/src/ace.js"></script>
         
-        
         <script type="text/javascript">
-            $(document).ready(function(){
-            
+            //$(document).ready(function(){
+            $(window).load(function(){
+                console.log("ready");
+                
                 var iframe = null;
             
                 // JS         
@@ -53,6 +54,7 @@
                     html_textarea.val(editor_html.getSession().getValue());
                     if (iframe != null)
                         $(iframe).find('#content-core').html(editor_html.getSession().getValue());
+                    //Templater.html = editor_html.getSession().getValue();
                 });
                 
                 // Open Preview
@@ -171,7 +173,6 @@
                 <textarea class="editor-html textarea-widget text-field" name="form.widgets.html" id="form-widgets-html">${context/html}</textarea>
             </div>
             <div id="editor-html"></div>
-
             
             <div id="formfield-form-widgets-suppress_title" data-fieldname="form.widgets.suppress_title" class="field pat-inlinevalidation kssattr-fieldname-form.widgets.suppress_title" data-pat-inlinevalidation="{&quot;type&quot;:&quot;z3c.form&quot;}">
                 <span id="form-widgets-suppress_title" class="option">

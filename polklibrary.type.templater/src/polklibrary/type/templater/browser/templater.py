@@ -1,7 +1,9 @@
+from chameleon import PageTemplate
 from plone import api
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
 
 class Templater(BrowserView):
 
@@ -14,17 +16,9 @@ class Templater(BrowserView):
         return self.context.css.replace('<style','<style class="ht-marker"')
         
     def get_html(self):
-        return self._transformed_html(self.context.html, self.context.set_context)
+        template = PageTemplate(self.context.html)
+        return template(context=self.context, request=self.request, view=self)
     
-    def _transformed_html(self, html, context):
-        """ I can't figure out how to send through tal interpreter, so this will do for now. """
-        if not context:
-            context = self.context
-        
-        html = html.replace('${context/absolute_url}', context.absolute_url())
-        html = html.replace('${portal/absolute_url}', self.portal.absolute_url())
-        return html
-        
     @property
     def portal(self):
         return api.portal.get()
@@ -47,7 +41,6 @@ class PreviewTemplater(Templater):
     def __call__(self):
     
         if self.request.form.get('form.buttons.preview',''):
-            print "LOADING >>>>>>"
             self.title = self.request.form.get('form.widgets.title','')
             self.description = self.request.form.get('form.widgets.description','')
             self.css = self.request.form.get('form.widgets.css','')
@@ -63,4 +56,7 @@ class PreviewTemplater(Templater):
         return self.css.replace('<style','<style class="ht-marker"')
         
     def get_html(self):
-        return self._transformed_html(self.html, self.set_context)
+        template = PageTemplate(self.html)
+        return template(context=self.set_context, request=self.request, view=self)
+        
+        

@@ -16,7 +16,8 @@
         name="polklibrary.type.templater"
         directory="static"
         />
-
+        
+        
     <browser:page
         for="polklibrary.type.templater.models.templater.ITemplater"
         name="html_view"
@@ -37,5 +38,6 @@
         class=".templater.PreviewTemplater"
         permission="zope2.View"
         />
+
       
 </configure>
