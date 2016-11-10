@@ -4,5 +4,6 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="polklibrary.type.templater">
 
+    <adapter name="SearchableText" factory=".templater.make_searchable" />
 
 </configure>

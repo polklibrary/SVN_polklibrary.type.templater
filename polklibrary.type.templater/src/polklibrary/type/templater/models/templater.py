@@ -1,5 +1,6 @@
 from polklibrary.type.templater import MessageFactory as _
 from plone import api
+from plone.indexer.decorator import indexer
 from plone.app.textfield import RichText
 from plone.supermodel import model
 from zope import schema
@@ -62,4 +63,17 @@ class ITemplater(model.Schema):
             default=u"",
             required=False,
         )
+                
+@indexer(ITemplater)
+def make_searchable(object, **kwargs):
+    import re
+    portal_transforms = api.portal.get_tool(name='portal_transforms')
+    data = portal_transforms.convertTo('text/plain', object.html, mimetype='text/html')
+    text = data.getData()
+    urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', object.html)
+    return [object.title, object.description, text] + urls
+        
+        
+        
+        
         
