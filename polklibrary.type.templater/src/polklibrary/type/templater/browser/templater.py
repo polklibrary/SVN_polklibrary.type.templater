@@ -10,6 +10,7 @@ class Templater(BrowserView):
     template = ViewPageTemplateFile("templater.pt")
     
     def __call__(self):
+        self.request.response.setHeader('X-Frame-Options', 'ALLOWALL')
         return self.template()
 
     def get_style(self):
