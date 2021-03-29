@@ -14,11 +14,15 @@ class Templater(BrowserView):
         return self.template()
 
     def get_style(self):
-        return self.context.css.replace('<style','<style class="ht-marker"')
+        if self.context.css:
+            return self.context.css.replace('<style','<style class="ht-marker"')
+        return '' # nothing
         
     def get_html(self):
-        template = PageTemplate(self.context.html)
-        return template(context=self.context, request=self.request, view=self)
+        if self.context.html:
+            template = PageTemplate(self.context.html)
+            return template(context=self.context, request=self.request, view=self)
+        return '' # nothing
     
     @property
     def portal(self):
@@ -50,7 +54,7 @@ class PreviewTemplater(Templater):
             self.suppress_title = self.request.form.get('form.widgets.suppress_title-empty-marker',False)
             self.suppress_description = self.request.form.get('form.widgets.suppress_description-empty-marker',False)
             self.set_context = self.request.form.get('form.widgets.set_context','')
-    
+            
         return self.template()
 
     def get_style(self):
