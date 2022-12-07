@@ -4,6 +4,9 @@ from Products.CMFPlone.utils import safe_unicode
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+from AccessControl import getSecurityManager
+from Products.CMFCore.permissions import AddPortalContent, ModifyPortalContent, ReviewPortalContent , ManagePortal
+
 
 class Templater(BrowserView):
 
@@ -23,7 +26,31 @@ class Templater(BrowserView):
             template = PageTemplate(self.context.html)
             return template(context=self.context, request=self.request, view=self)
         return '' # nothing
-    
+            
+    def check_permission(self, check):
+        sm = getSecurityManager()
+        
+        if check == "Anonymous":
+            if api.user.is_anonymous():
+                return True
+        elif check == "Authenticated":
+            if not api.user.is_anonymous():
+                return True
+        elif check == "Contributor":
+            if sm.checkPermission(AddPortalContent , self.context):
+                return True
+        elif check == "Editor":
+            if sm.checkPermission(ModifyPortalContent, self.context):
+                return True
+        elif check == "Reviewer":
+            if sm.checkPermission(ReviewPortalContent , self.context):
+                return True
+        elif check in ["Manager", "Site Manager", "Administrator", "Site Administrator"]:
+            if sm.checkPermission(ManagePortal, self.context):
+                return True
+                
+        return False
+        
     @property
     def portal(self):
         return api.portal.get()
@@ -64,4 +91,26 @@ class PreviewTemplater(Templater):
         template = PageTemplate(self.html)
         return template(context=self.set_context, request=self.request, view=self)
         
+    def check_permission(self, check):
+        sm = getSecurityManager()
         
+        if check == "Anonymous":
+            if api.user.is_anonymous():
+                return True
+        elif check == "Authenticated":
+            if not api.user.is_anonymous():
+                return True
+        elif check == "Contributor":
+            if sm.checkPermission(AddPortalContent , self.context):
+                return True
+        elif check == "Editor":
+            if sm.checkPermission(ModifyPortalContent, self.context):
+                return True
+        elif check == "Reviewer":
+            if sm.checkPermission(ReviewPortalContent , self.context):
+                return True
+        elif check in ["Manager", "Site Manager", "Administrator", "Site Administrator"]:
+            if sm.checkPermission(ManagePortal, self.context):
+                return True
+                
+        return False
